@@ -78,7 +78,7 @@ function rulesFactory(name, option) {
 }
 
 class Picket {
-  constructor({rules, output, outputOpt}) {
+  constructor({rules, output, outputFile, outputStream}) {
     this.rules = Object.keys(rules).map(name => rulesFactory(name, rules[name]));
     let stream;
     switch (output) {
@@ -86,7 +86,10 @@ class Picket {
       stream = process.stdout;
       break;
     case 'stream':
-      stream = outputOpt;
+      stream = outputStream;
+      break;
+    case 'file':
+      stream = fs.createWriteStream(outputFile);
       break;
     }
     this.output = function stdoutOutput(data) {

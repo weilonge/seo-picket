@@ -37,7 +37,7 @@ describe('Validate all rules', function() {
         },
       },
       output: 'stream',
-      outputOpt: stream,
+      outputStream: stream,
     });
     await picket.checkString('<head></head>');
     assert.equal(

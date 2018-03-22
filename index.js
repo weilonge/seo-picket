@@ -1,55 +1,70 @@
 #! /usr/bin/env node
 'use strict';
 
+const yargs = require('yargs');
 let SEOPicket = require('./src/seo-picket');
 
-let picket = new SEOPicket({
-  rules: {
-    h1: {},
-    head: {},
-    img: {},
-    a: {},
-    strong: {
-      tagCount: 15,
-    },
-    customRules: {
-      run: function($, output) {
-        output('my custom rule');
-      },
-    },
-  },
-  output: 'console',
-  outputOpt: 'log',
-});
+let argv = yargs
+  .usage('Usage: $0 --file [file path] OR $0 --string [HTML snippet]')
+  .example('$0 --file foo.html --console', 'Parse foo.html and show SEO defect items')
+  .option('file', {
+    alias: 'f',
+    describe: 'Path to a HTML file',
+  })
+  .option('string', {
+    alias: 's',
+    describe: 'A HTML snippet',
+    type: 'string',
+  })
+  .option('console', {
+    alias: 'c',
+    describe: 'Show the result on console',
+  })
+  .option('outputFile', {
+    alias: 'o',
+    describe: 'Write the result to a specific file',
+    type: 'string',
+  })
+  .option('rules', {
+    alias: 'r',
+    describe: 'Select some pre-defined rules',
+    type: 'array',
+    default: ['h1', 'head', 'img', 'a', 'strong'],
+  })
+  .option('strongCount', {
+    type: 'number',
+    describe: 'The low bound count of <strong> tag',
+    default: 15,
+  })
+  .conflicts('outputFile', 'console')
+  .conflicts('file', 'string')
+  .alias('h', 'help').help('h')
+  .alias('v', 'version')
+  .argv;
 
-let inputType = 'string';
+let picketOpt = {
+  rules: argv.rules.reduce((prev, current) => {
+    prev[current] = {};
+    return prev;
+  }, {}),
+};
 
-switch (inputType) {
-case 'file':
-  picket.check('test.html');
-  break;
-case 'string':
-  picket.checkString(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Title!</title>
-        <meta name="viewport" content="width=device-width"/>
-        <meta name="description" content="test"/>
-        <meta charset="UTF-8">
-      </head>
-      <body id="top">
-        <div>
-          <img src="headshot.jpg" alt="Norman" />
-          <h1 class="">Norman</h1>
-          <ul>
-            <li><a target="_blank" href="http://test.com">test</a></li>
-          </ul>
-        </div>
-      </body>
-    </html>
-  `);
-  picket.checkString('<head></head>');
-  break;
+if (picketOpt.rules.strong) {
+  picketOpt.rules.strong.tagCount = argv.strongCount;
+}
+
+if (argv.outputFile) {
+  picketOpt.output = 'file';
+  picketOpt.outputFile = argv.outputFile;
+} else {
+  picketOpt.output = 'console';
+}
+
+let picket = new SEOPicket(picketOpt);
+
+if (argv.file) {
+  picket.check(argv.file);
+} else if (argv.string) {
+  picket.checkString(argv.string);
 }
 
