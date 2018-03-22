@@ -1,0 +1,23 @@
+{
+  "name": "seo-picket",
+  "version": "1.0.0",
+  "description": "NodeJS module for checking SEO defects of HTML pages",
+  "main": "./src/seo-picket.js",
+  "scripts": {},
+  "bin": {
+    "seo-picket": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weilonge/seo-picket.git"
+  },
+  "author": "Sean Lee <weilonge@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weilonge/seo-picket/issues"
+  },
+  "homepage": "https://github.com/weilonge/seo-picket#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2"
+  }
+}
