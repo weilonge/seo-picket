@@ -68,8 +68,8 @@ function rulesFactory(name, option) {
     return rule();
   }
 
-  if (option && option.run) {
-    return option.run;
+  if (option) {
+    return option;
   }
 
   console.error('Invalid rule option:', name);

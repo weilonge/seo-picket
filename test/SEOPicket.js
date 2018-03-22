@@ -30,10 +30,8 @@ describe('Validate all rules', function() {
         strong: {
           tagCount: 15,
         },
-        customRules: {
-          run: function($, output) {
-            output('my custom rule');
-          },
+        customRule($, output) {
+          output('my custom rule');
         },
       },
       output: 'stream',
