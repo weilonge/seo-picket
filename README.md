@@ -1,6 +1,7 @@
 # seo-picket
 NodeJS module for checking SEO defects of HTML pages
 
+[![Build Status][travis-image]][travis-url]
 
 #### Installation
 
@@ -46,4 +47,7 @@ npm test
 ```bash
 npm run lint
 ```
+
+[travis-url]: https://travis-ci.org/weilonge/seo-picket
+[travis-image]: https://api.travis-ci.org/weilonge/seo-picket.svg?branch=master
 
