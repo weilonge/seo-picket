@@ -2,9 +2,9 @@
 'use strict';
 
 const yargs = require('yargs');
-let SEOPicket = require('./src/seo-picket');
+const SEOPicket = require('./src/seo-picket');
 
-let argv = yargs
+const argv = yargs
   .usage('Usage: $0 --file [file path] OR $0 --string [HTML snippet]')
   .example('$0 --file foo.html --console', 'Parse foo.html and show SEO defect items')
   .option('file', {
@@ -42,7 +42,7 @@ let argv = yargs
   .alias('v', 'version')
   .argv;
 
-let picketOpt = {
+const picketOpt = {
   rules: argv.rules.reduce((prev, current) => {
     prev[current] = {};
     return prev;
@@ -60,7 +60,7 @@ if (argv.outputFile) {
   picketOpt.output = 'console';
 }
 
-let picket = new SEOPicket(picketOpt);
+const picket = new SEOPicket(picketOpt);
 
 if (argv.file) {
   picket.check(argv.file);

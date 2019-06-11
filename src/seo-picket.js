@@ -63,7 +63,7 @@ function rulesFactory(name, option) {
     },
   };
 
-  let rule = preDefinedRules[name];
+  const rule = preDefinedRules[name];
   if (rule) {
     return rule();
   }

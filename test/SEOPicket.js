@@ -34,7 +34,7 @@ describe('Validate all rules', function() {
 
   it('<head></head> should contain <title> and the related <meta>.', async function () {
     const stream = new OutputStream();
-    let picket = new Picket({
+    const picket = new Picket({
       rules,
       output: 'stream',
       outputStream: stream,
@@ -51,7 +51,7 @@ describe('Validate all rules', function() {
 
   it('reading from fixtures.html should contain the correct result.', async function () {
     const stream = new OutputStream();
-    let picket = new Picket({
+    const picket = new Picket({
       rules,
       output: 'stream',
       outputStream: stream,
